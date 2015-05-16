@@ -16,7 +16,6 @@ public class NotepadFrame extends JFrame {
         // JFrame Settings
         setTitle(GENERAL_SETTINGS.DISPLAY_NAME);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-        setType(Type.NORMAL);
         setSize(500, 500);
         setLayout(new BorderLayout());
 
