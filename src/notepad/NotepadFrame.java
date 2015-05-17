@@ -2,7 +2,7 @@ package notepad;
 
 import SETTINGS.GENERAL_SETTINGS;
 import notepad.elements.NotepadMenuBar;
-import notepad.elements.TransparencyManager;
+import notepad.transparency.TransparencyManager;
 import notepad.keyTracker.KeyTracker;
 import notepad.keyTracker.Keybinds.WindowDrag;
 import notepad.textPanel.TextPanel;
@@ -38,8 +38,6 @@ public class NotepadFrame extends JFrame {
         createTextPanel();
         createJMenuBar();
         setBackground(new Color(40, 40, 150, 230));
-        createKeyTracker();
-        createMouseTracker();
         createActionTracking();
     }
 
@@ -50,30 +48,6 @@ public class NotepadFrame extends JFrame {
         textPanel.textField.addKeyListener(keyTracker.keyListener);
 
         // create CTRL movement;
-        windowDrag = new MouseAdapter() {
-            Point mousePointOnScreen;
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                mousePointOnScreen = e.getLocationOnScreen();
-            }
-
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                if (e.isControlDown()) {
-                    System.out.println("Dragged");
-                    Point p = NotepadFrame.this.getLocation();
-                    p.x += e.getXOnScreen() - mousePointOnScreen.x;
-                    p.y += e.getYOnScreen() - mousePointOnScreen.y;
-                    NotepadFrame.this.setLocation(p);
-                    mousePointOnScreen = e.getLocationOnScreen();
-                }
-            }
-        };
-        textPanel.textField.addMouseListener(windowDrag);
-    }
- 
-    private void createMouseTracker(){
         windowDrag = new WindowDrag(this);
         windowDrag.addToCtrlDrag(textPanel.textField);
         windowDrag.addToRegularDrag(notepadMenuBar);

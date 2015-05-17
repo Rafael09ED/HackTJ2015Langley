@@ -1,7 +1,8 @@
-package notepad;
+package notepad.elements;
 
 import SETTINGS.GENERAL_SETTINGS;
 import SETTINGS.GUI_SETTINGS;
+import notepad.NotepadFrame;
 import notepad.dialogs.TransparencyDialog;
 
 import javax.swing.*;

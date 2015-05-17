@@ -1,5 +1,7 @@
 package notepad;
 
+import notepad.elements.NotepadTray;
+
 import javax.swing.*;
 
 

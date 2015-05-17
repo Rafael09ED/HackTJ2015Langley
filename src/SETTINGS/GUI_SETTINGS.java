@@ -11,5 +11,7 @@ public class GUI_SETTINGS {
     static{
         TRAY_IMAGE = Toolkit.getDefaultToolkit().getImage("src/resources/textIcon.png");
     }
+    public static final Float OPACITY_INCREMENT = .01f;
+    public static final int ANIM_INTERVAL = 25;
 
 }

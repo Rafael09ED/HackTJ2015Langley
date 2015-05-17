@@ -1,6 +1,6 @@
 package notepad.dialogs;
 
-import notepad.elements.TransparencyManager;
+import notepad.transparency.TransparencyManager;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

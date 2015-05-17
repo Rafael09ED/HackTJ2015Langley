@@ -1,11 +1,12 @@
-package notepad;
+package notepad.transparency;
 
+import notepad.NotepadFrame;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Timer;
-
-public class Fader {
+public class NotepadFrameFader {
 
 	//timer utility from jframe
 	//
@@ -15,7 +16,7 @@ public class Fader {
 	private float increment;
 	private int interval;
 	
-	public Fader(NotepadFrame notepadFrame, float increment, int interval) {
+	public NotepadFrameFader(NotepadFrame notepadFrame, float increment, int interval) {
 		this.notepadFrame = notepadFrame;
 		this.increment = increment;
 		this.interval = interval;
@@ -43,8 +44,7 @@ public class Fader {
 				float newOpacity = current + increment;
 				newOpacity = Math.min(1f, newOpacity);
 				newOpacity = Math.max(0f, newOpacity);
-				System.out.println(newOpacity);
-				notepadFrame.changeOpacity(newOpacity);	
+				notepadFrame.setOpacity(newOpacity);
 			 
 				if(Math.abs(notepadFrame.getOpacity() - target0) <= .05 || notepadFrame.getOpacity() >= 1){
 					timer.stop();
