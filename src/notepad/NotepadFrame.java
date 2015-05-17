@@ -1,9 +1,8 @@
 package notepad;
 
 import SETTINGS.GENERAL_SETTINGS;
-import notepad.elements.*;
+import notepad.elements.NotepadMenuBar;
 import notepad.keyTracker.KeyTracker;
-import notepad.keyTracker.Keybinds.WindowDrag;
 import notepad.textPanel.TextPanel;
 
 import javax.swing.*;
@@ -20,8 +19,12 @@ public class NotepadFrame extends JFrame {
     private TextPanel textPanel;
     private NotepadMenuBar notepadMenuBar;
     private KeyTracker keyTracker;
+
     private WindowDrag windowDrag;
     private MouseListener mouseListener; 
+
+    private MouseListener windowDrag;
+
 
     public NotepadFrame() {
 
@@ -45,9 +48,27 @@ public class NotepadFrame extends JFrame {
         addKeyListener(keyTracker.keyListener);
         textPanel.textField.addKeyListener(keyTracker.keyListener);
         // create CTRL movement;
-        windowDrag = new WindowDrag(this);
-        textPanel.textField.addMouseListener(windowDrag.mouseMotionAdapter);
-        keyTracker.keyBinds.add(windowDrag.getKeyBind());
+        windowDrag = new MouseAdapter() {
+            Point mousePointOnScreen;
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mousePointOnScreen = e.getLocationOnScreen();
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (e.isControlDown()) {
+                    System.out.println("Dragged");
+                    Point p = NotepadFrame.this.getLocation();
+                    p.x += e.getXOnScreen() - mousePointOnScreen.x;
+                    p.y += e.getYOnScreen() - mousePointOnScreen.y;
+                    NotepadFrame.this.setLocation(p);
+                    mousePointOnScreen = e.getLocationOnScreen();
+                }
+            }
+        };
+        textPanel.textField.addMouseListener(windowDrag);
     }
  
     private void createMouseTracker(){
@@ -69,6 +90,7 @@ public class NotepadFrame extends JFrame {
        textPanel.textField.addMouseListener(mouseListener);
        //addMouseMotionListener(mouseListener);
     }
+
 
     private void changeOpacity(float opacity) {
     	setOpacity(opacity);
