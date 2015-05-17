@@ -2,12 +2,14 @@ package notepad;
 
 import javax.swing.*;
 
+
+
 /**
  * Created by Rafael on 5/16/2015.
  */
 public class Notepad {
     private NotepadFrame notepadFrame;
-
+    
     public Notepad() {
         createNotepadGUI();
         createTrayIcon();

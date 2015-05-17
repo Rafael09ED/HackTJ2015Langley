@@ -3,6 +3,8 @@ package notepad.textPanel;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+
 import java.awt.*;
 
 /**
@@ -10,6 +12,7 @@ import java.awt.*;
  */
 public class TextPanel extends JPanel {
     public TextField textField;
+    
     public TextPanel() {
         setLayout(new BorderLayout(1,1));
         //setBackground(new Color(0,0,0,0)); //alter this to affect translucency
@@ -31,7 +34,6 @@ public class TextPanel extends JPanel {
 		
 		@Override
 		public void insertUpdate(DocumentEvent e) {
-
 		}
 		
 		@Override

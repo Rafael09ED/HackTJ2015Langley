@@ -7,7 +7,11 @@ import notepad.keyTracker.Keybinds.WindowDrag;
 import notepad.textPanel.TextPanel;
 
 import javax.swing.*;
+
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by Rafael on 5/16/2015.
@@ -17,19 +21,23 @@ public class NotepadFrame extends JFrame {
     private NotepadMenuBar notepadMenuBar;
     private KeyTracker keyTracker;
     private WindowDrag windowDrag;
+    private MouseListener mouseListener; 
+
     public NotepadFrame() {
 
         // JFrame Settings
         setTitle(GENERAL_SETTINGS.DISPLAY_NAME);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         setSize(500, 500);
+        setUndecorated(true); //set false to put back header
         setLayout(new BorderLayout());
-
+        setOpacity(.5f);
         // GUI Contents
-        createTextPanel();
+        createTextPanel(); 
         createJMenuBar();
 
         createKeyTracker();
+        createMouseTracker();
     }
 
     private void createKeyTracker() {
@@ -41,18 +49,33 @@ public class NotepadFrame extends JFrame {
         textPanel.textField.addMouseListener(windowDrag.mouseMotionAdapter);
         keyTracker.keyBinds.add(windowDrag.getKeyBind());
     }
+ 
+    private void createMouseTracker(){
+        mouseListener = new MouseAdapter() {
+        	@Override
+        	public void mouseEntered(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		super.mouseEntered(e);
+        		System.out.println("Entered!");
+        	}
+            public void mouseExited(MouseEvent e) {
+            	super.mouseExited(e);
+                System.out.println("Exited!");
+            }
+		};
+       textPanel.textField.addMouseListener(mouseListener);
+       //addMouseMotionListener(mouseListener);
+    }
 
     private void createJMenuBar(){
+    	JMenu jMenu = new JMenu("View");
         notepadMenuBar = new NotepadMenuBar();
-
-        JMenu jMenu = new JMenu("View");
         notepadMenuBar.add(jMenu);
-
         add(notepadMenuBar, BorderLayout.NORTH);
     }
 
     private void createTextPanel() {
-        textPanel = new TextPanel();
+        textPanel = new TextPanel(); //testing
         add(textPanel, BorderLayout.CENTER);
     }
 }
