@@ -36,15 +36,19 @@ public class NotepadMenuBar extends JMenuBar {
         fileMenu = new JMenu("File");
         JMenuItem TEMP_JMenuItem;
 
+        TEMP_JMenuItem = new JMenuItem("About");
+        TEMP_JMenuItem.addActionListener(NotepadTray.aboutAction);
+        addToFileMenu(TEMP_JMenuItem);
+
+        JMenuItem shortcutsItem = new JMenuItem("Keyboard Shortcuts");
+        shortcutsItem.addActionListener(e -> notepadFrame.textPanel.showShortcuts());
+
         fileMenu.addSeparator();
 
         TEMP_JMenuItem = new JMenuItem("Exit");
         TEMP_JMenuItem.addActionListener(NotepadTray.closeAction);
         fileMenu.add(TEMP_JMenuItem);
 
-        TEMP_JMenuItem = new JMenuItem("About");
-        TEMP_JMenuItem.addActionListener(NotepadTray.aboutAction);
-        addToFileMenu(TEMP_JMenuItem);
 
         add(fileMenu);
     }

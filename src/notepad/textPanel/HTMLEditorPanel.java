@@ -1,4 +1,5 @@
-package otherCode;
+package notepad.textPanel;
+
 /*	HTMLDocumentEditor.java
 *	@author: Charles Bell
 *	@version: May 27, 2002	
@@ -22,10 +23,10 @@ import java.awt.event.WindowEvent;
 import java.io.*;
 
 
-public class HTMLDocumentEditor extends JFrame implements ActionListener{
+public class HTMLEditorPanel extends JPanel implements ActionListener{
 
-    private HTMLDocument document;
-    private JTextPane textPane = new JTextPane();
+    private HTMLDocument document = (HTMLDocument)(new HTMLEditorKit().createDefaultDocument());
+    public final JTextPane textPane = new JTextPane();
     private boolean debug = false;
     private File currentFile;
 
@@ -52,10 +53,8 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
     private HTMLEditorKit.InsertHTMLTextAction bulletAction
             = new HTMLEditorKit.InsertHTMLTextAction("Bullets", "<li> </li>",HTML.Tag.UL,HTML.Tag.LI);
 
-    public HTMLDocumentEditor(){
-        super("HTMLDocumentEditor");
-        HTMLEditorKit editorKit = new HTMLEditorKit();
-        document = (HTMLDocument)editorKit.createDefaultDocument();
+    public JMenuBar menuBar;
+    public HTMLEditorPanel(){
         // Force SwingSet to come up in the Cross Platform L&F
         try {
             //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
@@ -69,22 +68,20 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
     }
 
     public static void main(String[] args){
-        HTMLDocumentEditor editor = new HTMLDocumentEditor();
+        HTMLEditorPanel editor = new HTMLEditorPanel();
     }
 
     public void init(){
 
-        addWindowListener(new FrameListener());
 
-        JMenuBar menuBar = new JMenuBar();
-        getContentPane().add(menuBar, BorderLayout.NORTH);
+        menuBar = new JMenuBar();
+        add(menuBar, BorderLayout.NORTH);
         JMenu fileMenu = new JMenu("File");
         JMenu editMenu = new JMenu("Edit");
         JMenu colorMenu = new JMenu("Color");
         JMenu fontMenu = new JMenu("Font");
         JMenu styleMenu = new JMenu("Style");
         JMenu alignMenu = new JMenu("Align");
-        JMenu helpMenu = new JMenu("Help");
 
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
@@ -92,7 +89,6 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
         menuBar.add(fontMenu);
         menuBar.add(styleMenu);
         menuBar.add(alignMenu);
-        menuBar.add(helpMenu);
 
         JMenuItem newItem = new JMenuItem("New", new ImageIcon("whatsnew-bang.gif"));
         JMenuItem openItem = new JMenuItem("Open",new ImageIcon("open.gif"));
@@ -246,19 +242,6 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
         alignMenu.add(centerMenuItem);
         alignMenu.add(rightAlignMenuItem);
 
-        JMenuItem helpItem = new JMenuItem("Help");
-        helpItem.addActionListener(this);
-        helpMenu.add(helpItem);
-
-        JMenuItem shortcutsItem = new JMenuItem("Keyboard Shortcuts");
-        shortcutsItem.addActionListener(this);
-        helpMenu.add(shortcutsItem);
-
-        JMenuItem aboutItem = new JMenuItem("About QuantumHyperSpace");
-        aboutItem.addActionListener(this);
-        helpMenu.add(aboutItem);
-
-
         JPanel editorControlPanel = new JPanel();
         //editorControlPanel.setLayout(new GridLayout(3,3));
         editorControlPanel.setLayout(new FlowLayout());
@@ -353,7 +336,7 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
         document.addUndoableEditListener(undoHandler);
         resetUndoManager();
 
-        textPane = new JTextPane(document);
+        //textPane.revalidate();
         textPane.setContentType("text/html");
         JScrollPane scrollPane = new JScrollPane(textPane);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -365,13 +348,10 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
         toolPanel.add(editorControlPanel, BorderLayout.NORTH);
         toolPanel.add(specialPanel, BorderLayout.CENTER);
         toolPanel.add(alignPanel, BorderLayout.SOUTH);
-        getContentPane().add(menuBar, BorderLayout.NORTH);
+        add(menuBar, BorderLayout.NORTH);
         //getContentPane().add(toolPanel, BorderLayout.CENTER);
-        getContentPane().add(scrollPane, BorderLayout.SOUTH);
-        pack();
-        setLocationRelativeTo(null);
+        add(scrollPane, BorderLayout.SOUTH);
         startNewDocument();
-        setVisible(true);
     }
 
     public void actionPerformed(ActionEvent ae){
@@ -399,10 +379,6 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
             clear();
         } else if (actionCommand.compareTo("Select All") == 0){
             selectAll();
-        } else if (actionCommand.compareTo("Help") == 0){
-            help();
-        } else if (actionCommand.compareTo("Keyboard Shortcuts") == 0){
-            showShortcuts();
         } else if (actionCommand.compareTo("About QuantumHyperSpace") == 0){
             aboutQuantumHyperSpace();
         }
@@ -422,7 +398,6 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
         document = (HTMLDocument)editorKit.createDefaultDocument();
         textPane.setDocument(document);
         currentFile = null;
-        setTitle("HTMLDocumentEditor");
         textPane.getDocument().addUndoableEditListener(undoHandler);
         resetUndoManager();
     }
@@ -436,7 +411,7 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
             int approval = chooser.showSaveDialog(this);
             if (approval == JFileChooser.APPROVE_OPTION){
                 currentFile = chooser.getSelectedFile();
-                setTitle(currentFile.getName());
+                //setTitle(currentFile.getName());
                 FileReader fr = new FileReader(currentFile);
                 Document oldDoc = textPane.getDocument();
                 if(oldDoc != null)
@@ -489,7 +464,7 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
                             + "Do you want to replace it?";
                     if (JOptionPane.showConfirmDialog(this, message) == JOptionPane.YES_OPTION){
                         currentFile = newFile;
-                        setTitle(currentFile.getName());
+                        //setTitle(currentFile.getName());
                         FileWriter fw = new FileWriter(currentFile);
                         fw.write(textPane.getText());
                         fw.close();
@@ -497,7 +472,7 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
                     }
                 }else{
                     currentFile = new File(newFile.getAbsolutePath());
-                    setTitle(currentFile.getName());
+                   // setTitle(currentFile.getName());
                     FileWriter fw = new FileWriter(currentFile);
                     fw.write(textPane.getText());
                     fw.close();
@@ -524,14 +499,6 @@ public class HTMLDocumentEditor extends JFrame implements ActionListener{
 
     public void selectAll(){
         textPane.selectAll();
-    }
-
-    public void help(){
-        JOptionPane.showMessageDialog(this,"DocumentEditor.java\n" +
-                "Author: Charles Bell\n" +
-                "Version: May 25, 2002\n" +
-                "http://www.quantumhyperspace.com\n" +
-                "QuantumHyperSpace Programming Services");
     }
 
     public void showShortcuts(){

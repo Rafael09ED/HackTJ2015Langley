@@ -5,7 +5,7 @@ import notepad.elements.NotepadMenuBar;
 import notepad.transparency.TransparencyManager;
 import notepad.keyTracker.KeyTracker;
 import notepad.keyTracker.Keybinds.WindowDrag;
-import notepad.textPanel.TextPanel;
+import notepad.textPanel.HTMLEditorPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,7 @@ import java.awt.event.MouseEvent;
  * Created by Rafael on 5/16/2015.
  */
 public class NotepadFrame extends JFrame {
-    private TextPanel textPanel;
+    public HTMLEditorPanel textPanel;
     private NotepadMenuBar notepadMenuBar;
     private KeyTracker keyTracker;
     
@@ -45,17 +45,17 @@ public class NotepadFrame extends JFrame {
     private void createActionTracking() {
         keyTracker = new KeyTracker(this);
         addKeyListener(keyTracker.keyListener);
-        textPanel.textField.addKeyListener(keyTracker.keyListener);
+        textPanel.textPane.addKeyListener(keyTracker.keyListener);
 
         // create CTRL movement;
         windowDrag = new WindowDrag(this);
-        windowDrag.addToCtrlDrag(textPanel.textField);
+        windowDrag.addToCtrlDrag(textPanel.textPane);
         windowDrag.addToRegularDrag(notepadMenuBar);
 
         //menu transparency
         notepadMenuBar.addMouseListener(mouseTransparencyFull);
         notepadMenuBar.setElementsMouseListener(mouseTransparencyFull);
-        textPanel.textField.addMouseListener(mouseTransparencyHighLow);
+        textPanel.textPane.addMouseListener(mouseTransparencyHighLow);
     }
 
     private void createJMenuBar() {
@@ -65,7 +65,7 @@ public class NotepadFrame extends JFrame {
 
 
     private void createTextPanel() {
-        textPanel = new TextPanel(); //testing
+        textPanel = new HTMLEditorPanel(); //testing
         add(textPanel, BorderLayout.CENTER);
     }
 

@@ -5,6 +5,10 @@ package SETTINGS;
  */
 public class GENERAL_SETTINGS {
     public static final String DISPLAY_NAME = "OverNote";
-    public static final String ABOUT_TEXT = DISPLAY_NAME + "\n" + "By: Team LHS - 2015";
+    public static final String ABOUT_TEXT = DISPLAY_NAME
+            + "\n" +
+            "By: Team LHS - 2015"
+            + "\n" +
+            " Using HTML Editor by Charles Bell - 2002 ";
 
 }
