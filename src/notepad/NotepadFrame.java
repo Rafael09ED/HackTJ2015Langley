@@ -40,6 +40,7 @@ public class NotepadFrame extends JFrame {
         {
             //For Mac
             try {
+                System.setProperty("com.apple.mrj.application.apple.menu.about.name", GENERAL_SETTINGS.DISPLAY_NAME);
                 Class util = Class.forName("com.apple.eawt.Application");
                 Method getApplication = util.getMethod("getApplication", new Class[0]);
                 Object application = getApplication.invoke(util);
@@ -48,7 +49,6 @@ public class NotepadFrame extends JFrame {
                 Method setDockIconImage = util.getMethod("setDockIconImage", params);
                 setDockIconImage.invoke(application, GUI_SETTINGS.LOGO);
             } catch (Exception e) {
-                // log exception
             }
         }
 
