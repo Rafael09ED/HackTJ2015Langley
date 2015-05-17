@@ -57,13 +57,13 @@ public class NotepadFrame extends JFrame {
         		// TODO Auto-generated method stub
         		super.mouseEntered(e);
         		System.out.println("Entered!");
-        		changeOpacity(1f);
+        		changeOpacity(.5f);
         	}
 
 			public void mouseExited(MouseEvent e) {
             	super.mouseExited(e);
                 System.out.println("Exited!");
-                changeOpacity(.3f);
+                changeOpacity(.2f);
             }
 		};
        textPanel.textField.addMouseListener(mouseListener);
