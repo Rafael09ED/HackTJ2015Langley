@@ -3,6 +3,7 @@ package notepad;
 import SETTINGS.GENERAL_SETTINGS;
 import notepad.elements.NotepadMenuBar;
 import notepad.keyTracker.KeyTracker;
+import notepad.keyTracker.Keybinds.WindowDrag;
 import notepad.textPanel.TextPanel;
 
 import javax.swing.*;
@@ -20,7 +21,7 @@ public class NotepadFrame extends JFrame {
     private NotepadMenuBar notepadMenuBar;
     private KeyTracker keyTracker;
 
-    private WindowDrag windowDrag;
+
     private MouseListener mouseListener; 
 
     private MouseListener windowDrag;
