@@ -31,7 +31,7 @@ public class NotepadFrame extends JFrame {
         setSize(500, 500);
         setUndecorated(true); //set false to put back header
         setLayout(new BorderLayout());
-        setOpacity(.5f);
+        setOpacity(1f);
         // GUI Contents
         createTextPanel(); 
         createJMenuBar();
@@ -57,16 +57,22 @@ public class NotepadFrame extends JFrame {
         		// TODO Auto-generated method stub
         		super.mouseEntered(e);
         		System.out.println("Entered!");
+        		changeOpacity(1f);
         	}
-            public void mouseExited(MouseEvent e) {
+
+			public void mouseExited(MouseEvent e) {
             	super.mouseExited(e);
                 System.out.println("Exited!");
+                changeOpacity(.3f);
             }
 		};
        textPanel.textField.addMouseListener(mouseListener);
        //addMouseMotionListener(mouseListener);
     }
 
+    private void changeOpacity(float opacity) {
+    	setOpacity(opacity);
+    }
     private void createJMenuBar(){
     	JMenu jMenu = new JMenu("View");
         notepadMenuBar = new NotepadMenuBar();
