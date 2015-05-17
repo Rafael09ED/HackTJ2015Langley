@@ -4,15 +4,18 @@ import SETTINGS.GENERAL_SETTINGS;
 import SETTINGS.GUI_SETTINGS;
 import notepad.elements.NotepadMenuBar;
 import notepad.keyTracker.KeyBind;
-import notepad.keyTracker.ToggleEvent;
-import notepad.transparency.TransparencyManager;
 import notepad.keyTracker.KeyTracker;
 import notepad.keyTracker.Keybinds.WindowDrag;
+import notepad.keyTracker.ToggleEvent;
 import notepad.textPanel.TextPanel;
+import notepad.transparency.TransparencyManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.lang.reflect.Method;
 
 /**
  * Created by Rafael on 5/16/2015.
@@ -34,6 +37,21 @@ public class NotepadFrame extends JFrame {
         setLayout(new BorderLayout());
 
         setIconImage(GUI_SETTINGS.LOGO);
+        {
+            //For Mac
+            try {
+                Class util = Class.forName("com.apple.eawt.Application");
+                Method getApplication = util.getMethod("getApplication", new Class[0]);
+                Object application = getApplication.invoke(util);
+                Class params[] = new Class[1];
+                params[0] = Image.class;
+                Method setDockIconImage = util.getMethod("setDockIconImage", params);
+                setDockIconImage.invoke(application, GUI_SETTINGS.LOGO);
+            } catch (Exception e) {
+                // log exception
+            }
+        }
+
 
         //GUI Tools
         transparencyManager = new TransparencyManager(this);
