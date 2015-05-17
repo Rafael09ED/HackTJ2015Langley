@@ -12,6 +12,7 @@ public class TextPanel extends JPanel {
     public TextField textField;
     public TextPanel() {
         setLayout(new BorderLayout(1,1));
+        //setBackground(new Color(0,0,0,0)); //alter this to affect translucency
         createTextField();
     }
 
