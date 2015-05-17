@@ -1,5 +1,7 @@
 package notepad.textPanel;
 
+import java.awt.Color;
+
 import javax.swing.*;
 
 /**
@@ -7,5 +9,6 @@ import javax.swing.*;
  */
 public class TextField extends JTextPane{
     public TextField() {
+        //setBackground(new Color(40, 40, 150, 230)); //CHANGE THIS TO ALTER SHADING OF FOLDER
     }
 }

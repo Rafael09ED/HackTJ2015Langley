@@ -21,12 +21,12 @@ public class NotepadFrame extends JFrame {
     private NotepadMenuBar notepadMenuBar;
     private KeyTracker keyTracker;
 
-
     private MouseListener mouseListener; 
 
     private MouseListener windowDrag;
 
-
+    private Fader fader;
+    
     public NotepadFrame() {
 
         // JFrame Settings
@@ -39,9 +39,10 @@ public class NotepadFrame extends JFrame {
         // GUI Contents
         createTextPanel(); 
         createJMenuBar();
-
+        setBackground(new Color(40, 40, 150, 230));
         createKeyTracker();
         createMouseTracker();
+        fader= new Fader(this, GENERAL_SETTINGS.OPACITY_INCREMENT, GENERAL_SETTINGS.ANIM_INTERVAL);
     }
 
     private void createKeyTracker() {
@@ -79,13 +80,13 @@ public class NotepadFrame extends JFrame {
         		// TODO Auto-generated method stub
         		super.mouseEntered(e);
         		System.out.println("Entered!");
-        		changeOpacity(.5f);
+        		fader.setTargetOpacity(.7f);
         	}
 
 			public void mouseExited(MouseEvent e) {
             	super.mouseExited(e);
                 System.out.println("Exited!");
-                changeOpacity(.2f);
+                fader.setTargetOpacity(.2f);
             }
 		};
        textPanel.textField.addMouseListener(mouseListener);
@@ -93,7 +94,7 @@ public class NotepadFrame extends JFrame {
     }
 
 
-    private void changeOpacity(float opacity) {
+    public void changeOpacity(float opacity) {
     	setOpacity(opacity);
     }
     private void createJMenuBar(){
@@ -107,4 +108,6 @@ public class NotepadFrame extends JFrame {
         textPanel = new TextPanel(); //testing
         add(textPanel, BorderLayout.CENTER);
     }
+    
+
 }
