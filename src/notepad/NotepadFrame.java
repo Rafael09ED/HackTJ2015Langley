@@ -1,13 +1,15 @@
 package notepad;
 
 import SETTINGS.GENERAL_SETTINGS;
-import notepad.elements.*;
+import notepad.elements.NotepadMenuBar;
 import notepad.keyTracker.KeyTracker;
-import notepad.keyTracker.Keybinds.WindowDrag;
 import notepad.textPanel.TextPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by Rafael on 5/16/2015.
@@ -16,7 +18,8 @@ public class NotepadFrame extends JFrame {
     private TextPanel textPanel;
     private NotepadMenuBar notepadMenuBar;
     private KeyTracker keyTracker;
-    private WindowDrag windowDrag;
+    private MouseListener windowDrag;
+
     public NotepadFrame() {
 
         // JFrame Settings
@@ -37,12 +40,30 @@ public class NotepadFrame extends JFrame {
         addKeyListener(keyTracker.keyListener);
         textPanel.textField.addKeyListener(keyTracker.keyListener);
         // create CTRL movement;
-        windowDrag = new WindowDrag(this);
-        textPanel.textField.addMouseListener(windowDrag.mouseMotionAdapter);
-        keyTracker.keyBinds.add(windowDrag.getKeyBind());
+        windowDrag = new MouseAdapter() {
+            Point mousePointOnScreen;
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mousePointOnScreen = e.getLocationOnScreen();
+            }
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (e.isControlDown()) {
+                    System.out.println("Dragged");
+                    Point p = NotepadFrame.this.getLocation();
+                    p.x += e.getXOnScreen() - mousePointOnScreen.x;
+                    p.y += e.getYOnScreen() - mousePointOnScreen.y;
+                    NotepadFrame.this.setLocation(p);
+                    mousePointOnScreen = e.getLocationOnScreen();
+                }
+            }
+        };
+        textPanel.textField.addMouseListener(windowDrag);
     }
 
-    private void createJMenuBar(){
+    private void createJMenuBar() {
         notepadMenuBar = new NotepadMenuBar();
 
         JMenu jMenu = new JMenu("View");

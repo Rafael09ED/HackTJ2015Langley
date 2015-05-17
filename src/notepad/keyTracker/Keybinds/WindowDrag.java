@@ -41,10 +41,12 @@ public class WindowDrag {
         @Override
         public void mousePressed(MouseEvent e) {
             mousePointOnScreen = e.getLocationOnScreen();
+
         }
 
         @Override
         public void mouseDragged(MouseEvent e) {
+            System.out.println("Dragged");
             Point p = notepadFrame.getLocation();
             p.x += e.getXOnScreen() - mousePointOnScreen.x;
             p.y += e.getYOnScreen() - mousePointOnScreen.y;

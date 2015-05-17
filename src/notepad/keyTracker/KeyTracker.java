@@ -33,7 +33,6 @@ public class KeyTracker {
             int key = e.getKeyCode();
             if (activeKeys.add(key)){
 
-                System.out.println("Key: " + key);
                 for (int i = 0; i < keyBinds.size(); i++) {
                     KeyBind keyBind = keyBinds.get(i);
                     keyBind.NewKeyPressed(keyTracker);
@@ -46,7 +45,6 @@ public class KeyTracker {
             while (activeKeys.contains(e.getKeyCode())) {
                 activeKeys.remove(e.getKeyCode());
             }
-            System.out.println("released");
             for (int i = 0; i < keyBinds.size(); i++) {
                 KeyBind keyBind = keyBinds.get(i);
                 keyBind.KeyRemoved(keyTracker);
