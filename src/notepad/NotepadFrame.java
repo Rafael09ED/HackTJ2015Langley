@@ -1,6 +1,7 @@
 package notepad;
 
 import SETTINGS.GENERAL_SETTINGS;
+import SETTINGS.GUI_SETTINGS;
 import notepad.elements.NotepadMenuBar;
 import notepad.keyTracker.KeyBind;
 import notepad.keyTracker.ToggleEvent;
@@ -31,6 +32,8 @@ public class NotepadFrame extends JFrame {
         setSize(500, 500);
         setUndecorated(true); //set false to put back header
         setLayout(new BorderLayout());
+
+        setIconImage(GUI_SETTINGS.LOGO);
 
         //GUI Tools
         transparencyManager = new TransparencyManager(this);
