@@ -1,6 +1,8 @@
 package notepad;
 
 import SETTINGS.GENERAL_SETTINGS;
+import notepad.elements.*;
+import notepad.keyTracker.KeyTracker;
 import notepad.textPanel.TextPanel;
 
 import javax.swing.*;
@@ -11,6 +13,8 @@ import java.awt.*;
  */
 public class NotepadFrame extends JFrame {
     private TextPanel textPanel;
+    private NotepadMenuBar notepadMenuBar;
+    private KeyTracker keyTracker;
     public NotepadFrame() {
 
         // JFrame Settings
@@ -21,6 +25,23 @@ public class NotepadFrame extends JFrame {
 
         // GUI Contents
         createTextPanel();
+        createJMenuBar();
+
+        createKeyTracker();
+    }
+
+    private void createKeyTracker() {
+        keyTracker = new KeyTracker(this);
+        addKeyListener(keyTracker.keyListener);
+        textPanel.textField.addKeyListener(keyTracker.keyListener);
+        // create CTRL movement;
+
+    }
+
+    private void createJMenuBar(){
+        notepadMenuBar = new NotepadMenuBar();
+
+        add(notepadMenuBar, BorderLayout.NORTH);
     }
 
     private void createTextPanel() {

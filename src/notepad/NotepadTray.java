@@ -73,7 +73,7 @@ public class NotepadTray {
             notepadFrame.setVisible(!notepadFrame.isVisible());
         }
     };
-    private ActionListener closeAction = new ActionListener() {
+    public static final ActionListener closeAction = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(1);

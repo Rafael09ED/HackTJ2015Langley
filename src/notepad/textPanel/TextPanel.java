@@ -1,19 +1,18 @@
 package notepad.textPanel;
 
+import notepad.Saver;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
-
-import notepad.Saver;
-
 import java.awt.*;
 
 /**
  * Created by Rafael on 5/16/2015.
  */
 public class TextPanel extends JPanel {
-    private TextField textField;
+    public TextField textField;
     public TextPanel() {
         setLayout(new BorderLayout(1,1));
         createTextField();
