@@ -45,6 +45,9 @@ Temporary Items
 # Compiled Java files
 *.class
 
+#Out for Resources
+out/
+
 #Idea Stuff
 .idea/
 
