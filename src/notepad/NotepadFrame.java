@@ -3,6 +3,7 @@ package notepad;
 import SETTINGS.GENERAL_SETTINGS;
 import notepad.elements.*;
 import notepad.keyTracker.KeyTracker;
+import notepad.keyTracker.Keybinds.WindowDrag;
 import notepad.textPanel.TextPanel;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ public class NotepadFrame extends JFrame {
     private TextPanel textPanel;
     private NotepadMenuBar notepadMenuBar;
     private KeyTracker keyTracker;
+    private WindowDrag windowDrag;
     public NotepadFrame() {
 
         // JFrame Settings
@@ -35,11 +37,16 @@ public class NotepadFrame extends JFrame {
         addKeyListener(keyTracker.keyListener);
         textPanel.textField.addKeyListener(keyTracker.keyListener);
         // create CTRL movement;
-
+        windowDrag = new WindowDrag(this);
+        textPanel.textField.addMouseListener(windowDrag.mouseMotionAdapter);
+        keyTracker.keyBinds.add(windowDrag.getKeyBind());
     }
 
     private void createJMenuBar(){
         notepadMenuBar = new NotepadMenuBar();
+
+        JMenu jMenu = new JMenu("View");
+        notepadMenuBar.add(jMenu);
 
         add(notepadMenuBar, BorderLayout.NORTH);
     }
