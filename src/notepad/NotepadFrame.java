@@ -2,6 +2,8 @@ package notepad;
 
 import SETTINGS.GENERAL_SETTINGS;
 import notepad.elements.NotepadMenuBar;
+import notepad.keyTracker.KeyBind;
+import notepad.keyTracker.ToggleEvent;
 import notepad.transparency.TransparencyManager;
 import notepad.keyTracker.KeyTracker;
 import notepad.keyTracker.Keybinds.WindowDrag;
@@ -9,8 +11,7 @@ import notepad.textPanel.TextPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 /**
  * Created by Rafael on 5/16/2015.
@@ -19,7 +20,7 @@ public class NotepadFrame extends JFrame {
     private TextPanel textPanel;
     private NotepadMenuBar notepadMenuBar;
     private KeyTracker keyTracker;
-    
+
     private WindowDrag windowDrag;
     public final TransparencyManager transparencyManager;
 
@@ -56,6 +57,37 @@ public class NotepadFrame extends JFrame {
         notepadMenuBar.addMouseListener(mouseTransparencyFull);
         notepadMenuBar.setElementsMouseListener(mouseTransparencyFull);
         textPanel.textField.addMouseListener(mouseTransparencyHighLow);
+
+        {
+            int[] keys = {KeyEvent.VK_CONTROL,KeyEvent.VK_SHIFT, KeyEvent.VK_T };
+            ToggleEvent toggleEvent = new ToggleEvent() {
+                @Override
+                public void actionEnabled() {
+                    Point mouse = MouseInfo.getPointerInfo().getLocation();
+                    setLocation(
+                            mouse.x - 20,
+                            mouse.y - 40);
+                }
+
+                @Override
+                public void actionDisabled() {
+                }
+            };
+            keyTracker.keyBinds.add(new KeyBind(keys,toggleEvent));
+        }
+        {
+            int[] keys = {KeyEvent.VK_CONTROL,KeyEvent.VK_SHIFT, KeyEvent.VK_H };
+            ToggleEvent toggleEvent = new ToggleEvent() {
+                @Override
+                public void actionEnabled() {
+                    setVisible(!isVisible());
+                }
+
+                @Override
+                public void actionDisabled() {    }
+            };
+            keyTracker.keyBinds.add(new KeyBind(keys,toggleEvent));
+        }
     }
 
     private void createJMenuBar() {
