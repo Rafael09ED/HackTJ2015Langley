@@ -138,4 +138,8 @@ public class NotepadFrame extends JFrame {
             transparencyManager.setToLowOpacity();
         }
     };
+
+    public TextPanel getTextPanel() {
+        return textPanel;
+    }
 }

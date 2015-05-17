@@ -3,6 +3,7 @@ package notepad.transparency;
 import notepad.NotepadFrame;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,7 +26,8 @@ public class NotepadFrameFader {
 	public void setTargetOpacity(float target0) {
 		if (timer != null) timer.stop();
 		
-		current = notepadFrame.getOpacity();
+		//current = notepadFrame.getOpacity();
+		current = (float) (notepadFrame.getTextPanel().textField.getBackground().getTransparency() / 255.0);
 		float change= 0;
 		if (target0 > current) {
 			change = 1;
@@ -41,11 +43,15 @@ public class NotepadFrameFader {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				current = notepadFrame.getOpacity();
+				current = (float) (notepadFrame.getTextPanel().textField.getBackground().getTransparency() / 255.0);
 				float newOpacity = current + increment;
 				newOpacity = Math.min(1f, newOpacity);
 				newOpacity = Math.max(0f, newOpacity);
-				notepadFrame.setOpacity(newOpacity);
-			 
+				//notepadFrame.setOpacity(newOpacity);
+				notepadFrame.getTextPanel().textField.setBackground(new Color(0,0,0,newOpacity));
+				notepadFrame.getTextPanel().setBackground(new Color(0, 0, 0, newOpacity));
+				notepadFrame.setBackground(new Color(0, 0, 0, newOpacity));
+
 				if(Math.abs(notepadFrame.getOpacity() - target0) <= .05 || notepadFrame.getOpacity() >= 1){
 					timer.stop();
 				}
